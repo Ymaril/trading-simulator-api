@@ -1,0 +1,96 @@
+---
+openapi: 3.0.1
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      description: Bearer token
+      name: Authorization
+      in: header
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/users/sign_in":
+    post:
+      summary: create authentication
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          headers:
+            access-token:
+              schema:
+                type: string
+              description: Json Web Token
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+  "/api/v1/users/sign_out":
+    delete:
+      summary: delete authentication
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+  "/api/v1/users/passwords":
+    patch:
+      summary: update password
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '200':
+          description: successful
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+              required:
+              - password
+  "/api/v1/users/sign_up":
+    post:
+      summary: create registration
+      parameters: []
+      responses:
+        '200':
+          description: successful
+          headers:
+            access-token:
+              schema:
+                type: string
+              description: Json Web Token
+        '422':
+          description: email in use
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+              - email
+              - password
+servers:
+- url: https://3000.ymaril.dev
