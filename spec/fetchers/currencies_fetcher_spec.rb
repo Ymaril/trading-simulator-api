@@ -96,7 +96,7 @@ RSpec.describe CurrenciesFetcher, type: :fetcher do
     let(:params) { {per_page: 5, page: page} }
 
     before do
-      7.times { create(:currency) }
+      create_list(:currency, 7)
     end
 
     describe 'first page' do

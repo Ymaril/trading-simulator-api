@@ -1,9 +1,9 @@
 require 'swagger_helper'
 
-RSpec.describe 'api/v1/admin/currencies', type: :request do
-  let!(:current_user) { create(:user, admin: true) }
+RSpec.describe 'api/v1/accounts', type: :request do
+  let!(:current_user) { create(:user) }
 
-  path '/api/v1/admin/currencies' do
+  path '/api/v1/accounts' do
     get('index') do
       security [api_key: []]
 
@@ -13,8 +13,8 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
       response(200, 'successful') do
         before do
-          create(:currency, name: 'Dollar', code: 'USD')
-          create(:currency, name: 'Ruble', code: 'RUB')
+          create_list(:account, 2, user: current_user)
+          create_list(:account, 2)
         end
 
         run_test! do |response|
@@ -22,12 +22,6 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
           expect(response_json["results"].count).to eq(2)
           expect(response_json).to include("meta" => {"total_count" => 2})
         end
-      end
-
-      response(401, 'forbidden') do
-        let!(:current_user) { create(:user, admin: false) }
-
-        run_test!
       end
     end
 
@@ -39,42 +33,40 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          code: { type: :string },
-          name: { type: :string }
+          currency: { type: :number }
         },
-        required: [ 'code', 'name' ]
+        required: ['currency_id']
       }
 
-      let(:params) { {code: 'USD', name: 'Dollar'} }
+      let(:currency) { create(:currency, code: 'USD', name: 'Dollar') }
+
+      let(:params) { {currency_id: currency.id} }
 
       consumes 'application/json'
 
       response(201, 'successful') do
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
+          expect(response_json).to include(
+            "balance" => 0, 
+            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id}
+          )
           expect(Currency.where(code: 'USD', name: 'Dollar')).to exist
         end
       end
 
       response(422, 'invalid request') do
-        before { create(:currency, code: 'USD', name: 'Dollar') }
+        before { create(:account, user: current_user, currency: currency) }
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => "Currency: Code has already been taken")
+          expect(response_json).to include("error" => "Account: Currency has already been taken")
         end
-      end
-
-      response(401, 'forbidden') do
-        let!(:current_user) { create(:user, admin: false) }
-
-        run_test!
       end
     end
   end
 
-  path '/api/v1/admin/currencies/{id}' do
+  path '/api/v1/accounts/{id}' do
     parameter name: :id, in: :path, type: :number
 
     get('show') do
@@ -85,29 +77,28 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
       consumes 'application/json'
 
       response(200, 'successful') do
-        let!(:currency) { create(:currency, name: 'Dollar', code: 'USD') }
-        let(:id) { currency.id }
+        let(:currency) { create(:currency, name: 'Dollar', code: 'USD') }
+        let!(:account) { create(:account, user: current_user, balance: 5, currency: currency) }
+        let(:id) { account.id }
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
+          expect(response_json).to match(
+            "balance" => 5,
+            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id},
+            "id" => account.id
+          )
         end
       end
 
       response(404, 'Not found') do
-        let(:id) { 1 }
+        let!(:account) { create(:account) }
+        let(:id) { account.id }
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to include("error" => 'not_found')
         end
-      end
-
-      response(401, 'forbidden') do
-        let!(:current_user) { create(:user, admin: false) }
-        let(:id) { 1 }
-
-        run_test!
       end
     end
 
@@ -119,30 +110,29 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
       consumes 'application/json'
 
       response(200, 'successful') do
-        let!(:currency) { create(:currency, name: 'Dollar', code: 'USD') }
-        let(:id) { currency.id }
+        let(:currency) { create(:currency, name: 'Dollar', code: 'USD') }
+        let!(:account) { create(:account, user: current_user, balance: 5, currency: currency) }
+        let(:id) { account.id }
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
-          expect(Currency.where(code: 'USD', name: 'Dollar')).to_not exist
+          expect(response_json).to match(
+            "balance" => 5,
+            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id},
+            "id" => account.id
+          )
+          expect(Account.where(user: current_user, currency: currency)).to_not exist
         end
       end
 
       response(404, 'Not found') do
-        let(:id) { 1 }
+        let!(:account) { create(:account) }
+        let(:id) { account.id }
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to include("error" => 'not_found')
         end
-      end
-
-      response(401, 'forbidden') do
-        let!(:current_user) { create(:user, admin: false) }
-        let(:id) { 1 }
-
-        run_test!
       end
     end
   end

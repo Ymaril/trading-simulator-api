@@ -32,7 +32,7 @@ RSpec.describe 'api/v1/currencies', type: :request do
 
       include_context 'auth'
 
-      parameter name: :id, in: :path, type: :string
+      parameter name: :id, in: :path, type: :number
 
       consumes 'application/json'
 

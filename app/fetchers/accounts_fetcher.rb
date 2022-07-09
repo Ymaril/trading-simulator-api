@@ -1,0 +1,2 @@
+class AccountsFetcher < BaseFetcher
+end

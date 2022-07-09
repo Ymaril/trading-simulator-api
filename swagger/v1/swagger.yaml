@@ -11,6 +11,59 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/accounts":
+    get:
+      summary: index
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currency:
+                  type: number
+              required:
+              - currency_id
+  "/api/v1/accounts/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+    get:
+      summary: show
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
+    delete:
+      summary: destroy
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
   "/api/v1/admin/currencies":
     get:
       summary: index
@@ -47,16 +100,16 @@ paths:
               - code
               - name
   "/api/v1/admin/currencies/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
     get:
       summary: show
       security:
       - api_key: []
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -68,12 +121,6 @@ paths:
       summary: destroy
       security:
       - api_key: []
-      parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: string
       responses:
         '200':
           description: successful
@@ -162,5 +209,29 @@ paths:
               required:
               - email
               - password
+  "/api/v1/currencies":
+    get:
+      summary: index
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+  "/api/v1/currencies/{id}":
+    get:
+      summary: show
+      security:
+      - api_key: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: number
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
 servers:
 - url: https://3000.ymaril.dev

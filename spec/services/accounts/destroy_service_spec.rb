@@ -9,13 +9,4 @@ RSpec.describe Currencies::DestroyService, type: :service do
     expect(subject.success?).to be_truthy
     expect(Currency.where(code: 'USD', name: 'Dollar')).to_not exist
   end
-
-  describe 'in use' do
-    before { create(:account, currency: currency) }
-
-    it do
-      expect(subject.success?).to be_falsy
-      expect(currency.reload).to be_present
-    end
-  end
 end

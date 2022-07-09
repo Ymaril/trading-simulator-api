@@ -4,15 +4,15 @@ module FetcherModules
       [
         {
           name: 'greater_than',
-          value: -> (params) { !params.is_a?(String) && params[:gte] }
+          value: -> (params) { params.respond_to?(:each_pair) && params[:gte] }
         },
         {
           name: 'lesser_than',
-          value: -> (params) { !params.is_a?(String) && params[:lte] }
+          value: -> (params) { params.respond_to?(:each_pair) && params[:lte] }
         },
         {
           name: 'equal',
-          value: -> (params) { params.is_a?(String) && params }
+          value: -> (params) { !params.respond_to?(:each_pair) && params }
         }
       ]
     end
@@ -25,8 +25,9 @@ module FetcherModules
 
         filter_types.each do |filter|
           values = filter[:value].call params[attribute_name]
+          values = values.split(',') if values.is_a? String
 
-          if values.is_a? String
+          if values
             method_name = "#{attribute_name}_#{filter[:name]}"
 
             if respond_to?(method_name)
@@ -50,7 +51,7 @@ module FetcherModules
     end
 
     def filter_equal_by(attribute_name, values, source)
-      source.where(attribute_name => values.split(','))
+      source.where(attribute_name => values)
     end
 
     def filters

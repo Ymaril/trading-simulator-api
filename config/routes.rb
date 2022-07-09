@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       end
 
       resources :currencies, only: %w[index show]
+      resources :accounts, only: %w[index show create destroy]
     end
   end
 
