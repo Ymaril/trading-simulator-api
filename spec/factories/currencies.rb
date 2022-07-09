@@ -1,6 +1,12 @@
 FactoryBot.define do
   factory :currency do
-    code { Faker::Currency.unique.code }
+    code do 
+      code = Faker::Currency.code
+
+      code = Faker::Currency.code while Currency.pluck(:code).include? code
+
+      code
+    end
     name { Faker::Currency.name }
   end
 end
