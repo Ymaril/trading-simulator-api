@@ -1,0 +1,2 @@
+class CurrenciesFetcher < BaseFetcher
+end

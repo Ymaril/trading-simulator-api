@@ -11,6 +11,76 @@ info:
   title: API V1
   version: v1
 paths:
+  "/api/v1/admin/currencies":
+    get:
+      summary: index
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: forbidden
+    post:
+      summary: create
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: invalid request
+        '401':
+          description: forbidden
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                code:
+                  type: string
+                name:
+                  type: string
+              required:
+              - code
+              - name
+  "/api/v1/admin/currencies/{id}":
+    get:
+      summary: show
+      security:
+      - api_key: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
+        '401':
+          description: forbidden
+    delete:
+      summary: destroy
+      security:
+      - api_key: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
+        '401':
+          description: forbidden
   "/api/v1/users/sign_in":
     post:
       summary: create authentication

@@ -41,24 +41,14 @@ RSpec.describe 'api_guard/authentication', type: :request do
   end
 
   path '/api/v1/users/sign_out' do
-    let!(:user) { create(:user) }
+    let(:current_user) { create(:user) }
 
     delete('delete authentication') do
       security [api_key: []]
 
       consumes 'application/json'
 
-      let(:jwt_payload) do
-        {
-          user_id: user.id,
-          exp: (Time.now.utc + 10.minutes).to_i,
-          iat: Time.now.utc.to_i
-        }
-      end
-      let(:api_key) do
-        Class.new { include ApiGuard::JwtAuth::JsonWebToken }.new.encode(jwt_payload) 
-      end
-      let(:Authorization) { "Bearer #{api_key}"}
+      include_context 'auth'
 
       response(200, 'successful') do
         run_test!
