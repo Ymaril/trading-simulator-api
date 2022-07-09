@@ -6,18 +6,18 @@ RSpec.describe Currency, type: :model do
   let(:code) { 'USD' }
   let(:name) { 'Dollar' }
 
-  it { expect(subject).to be_valid }
+  it { is_expected.to be_valid }
 
   describe 'empty name' do
     let(:name) { '' }
 
-    it { expect(subject).to_not be_valid }
+    it { is_expected.to_not be_valid }
   end
 
   describe 'empty code' do
     let(:code) { '' }
 
-    it { expect(subject).to_not be_valid }
+    it { is_expected.to_not be_valid }
   end
 
   describe 'not uniq code' do
@@ -27,6 +27,6 @@ RSpec.describe Currency, type: :model do
 
     let(:code) { 'RUB' }
 
-    it { expect(subject).to_not be_valid }
+    it { is_expected.to_not be_valid }
   end
 end
