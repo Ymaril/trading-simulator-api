@@ -1,0 +1,2 @@
+class OrdersFetcher < BaseFetcher
+end
