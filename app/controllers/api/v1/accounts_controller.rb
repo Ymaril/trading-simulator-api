@@ -1,5 +1,5 @@
 class Api::V1::AccountsController < Api::V1::V1Controller
-  before_action :set_account, only: %w[show destroy]
+  before_action :set_account, only: %w[show destroy charge]
   before_action :set_scope, only: %w[index]
 
   def index
@@ -30,6 +30,19 @@ class Api::V1::AccountsController < Api::V1::V1Controller
 
   def destroy
     result = Accounts::DestroyService.perform @account, params, current_user
+
+    if result.success?
+      render(
+        status: 200,
+        json: AccountSerializer.render_as_hash(result.data[:account])
+      )
+    else
+      render_error 422, {status: result.status, message: result.message}
+    end
+  end
+
+  def charge
+    result = Accounts::ChargeService.perform @account, params, current_user
 
     if result.success?
       render(

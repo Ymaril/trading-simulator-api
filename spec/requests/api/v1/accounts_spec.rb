@@ -33,7 +33,7 @@ RSpec.describe 'api/v1/accounts', type: :request do
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          currency: { type: :number }
+          currency_id: { type: :number }
         },
         required: ['currency_id']
       }
@@ -102,6 +102,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
       end
     end
 
+
+
     delete('destroy') do
       security [api_key: []]
 
@@ -128,6 +130,61 @@ RSpec.describe 'api/v1/accounts', type: :request do
       response(404, 'Not found') do
         let!(:account) { create(:account) }
         let(:id) { account.id }
+
+        run_test! do |response|
+          response_json = JSON.parse(response.body)
+          expect(response_json).to include("error" => 'not_found')
+        end
+      end
+    end
+  end
+
+  path '/api/v1/accounts/{id}/charge' do
+    parameter name: :id, in: :path, type: :number
+    parameter name: :params, in: :body, schema: {
+      type: :object,
+      properties: {
+        value: { type: :number }
+      },
+      required: ['value']
+    }
+
+    let(:params) { {value: value}}
+
+    patch('charge') do
+      security [api_key: []]
+
+      include_context 'auth'
+
+      consumes 'application/json'
+
+      let(:currency) { create(:currency, name: 'Dollar', code: 'USD') }
+      let!(:account) { create(:account, user: current_user, balance: 100, currency: currency) }
+      let(:id) { account.id }
+      let(:value) { 5 }
+
+      response(200, 'successful') do
+        run_test! do |response|
+          response_json = JSON.parse(response.body)
+          expect(response_json).to match(
+            "balance" => 105,
+            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id},
+            "id" => account.id
+          )
+          expect(Account.where(user: current_user, currency: currency, balance: 105)).to exist
+        end
+      end
+
+      response(422, 'Invalid request') do
+        let(:value) { -3 }
+
+        run_test! do |response|
+          expect(account.reload.balance).to eql(100)
+        end
+      end
+
+      response(404, 'Not found') do
+        let!(:account) { create(:account) }
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
