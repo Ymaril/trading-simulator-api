@@ -10,6 +10,8 @@ Rails.application.routes.draw do
       namespace :admin do
         resources :currencies, except: %w[update]
       end
+
+      resources :currencies, only: %w[index show]
     end
   end
 

@@ -1,5 +1,4 @@
 class Api::V1::Admin::AdminController < Api::V1::V1Controller
-  before_action :authenticate_and_set_user
   before_action :authorize_admin
 
   def authorize_admin
