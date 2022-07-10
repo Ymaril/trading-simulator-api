@@ -15,7 +15,8 @@ RSpec.describe OrderSerializer, type: :serializer do
       value: 10,
       expires_at: now + 15.minutes,
       completed_at: nil,
-      complete_type: :take_profit
+      complete_type: :take_profit,
+      state: :created
     ) 
   end
 
@@ -24,7 +25,7 @@ RSpec.describe OrderSerializer, type: :serializer do
       value: 10,
       complete_type: 'take_profit',
       completed_at: nil,
-      state: :created,
+      state: 'created',
       from_currency: {code: 'USD', name: 'Dollar', id: from_currency.id},
       to_currency: {code: 'RUB', name: 'Ruble', id: to_currency.id},
       expires_at: now + 15.minutes,

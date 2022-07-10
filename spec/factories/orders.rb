@@ -3,8 +3,8 @@ FactoryBot.define do
     association :user
     association :to_currency, factory: :currency
     association :from_currency, factory: :currency
-    state { :created }
-    complete_type { 'take_profit' }
+    state { %i[created completed canceled].sample }
+    complete_type { %i[take_profit stop_loss].sample }
     value { rand(0..100) }
     completed_at do
       if rand(0..10) > 3

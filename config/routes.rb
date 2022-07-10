@@ -12,9 +12,10 @@ Rails.application.routes.draw do
       end
 
       resources :currencies, only: %w[index show]
-      resources :accounts, only: %w[index show create destroy] do
+      resources :accounts, except: %w[update] do
         member { patch :charge }
       end
+      resources :orders, except: %w[update]
     end
   end
 

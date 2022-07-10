@@ -260,5 +260,72 @@ paths:
           description: successful
         '404':
           description: Not found
+  "/api/v1/orders":
+    get:
+      summary: index
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+    post:
+      summary: create
+      security:
+      - api_key: []
+      parameters: []
+      responses:
+        '201':
+          description: successful
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                from_currency_id:
+                  type: number
+                to_currency_id:
+                  type: number
+                value:
+                  type: number
+                expires_at:
+                  type: string
+                  format: date-time
+                complete_type:
+                  type: string
+                  enum:
+                  - take_profit
+                  - stop_loss
+              required:
+              - from_currency_id
+              - to_currency_id
+              - value
+  "/api/v1/orders/{id}":
+    parameters:
+    - name: id
+      in: path
+      required: true
+      schema:
+        type: number
+    get:
+      summary: show
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
+    delete:
+      summary: destroy
+      security:
+      - api_key: []
+      responses:
+        '200':
+          description: successful
+        '404':
+          description: Not found
 servers:
 - url: https://3000.ymaril.dev

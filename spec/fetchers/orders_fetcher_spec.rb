@@ -135,11 +135,7 @@ RSpec.describe OrdersFetcher, type: :fetcher do
           create(:order, state: :completed)
         end
 
-        it do
-          pending("Filter is working, but test is broken") # @todo state_machines conflict with spec db transaction
-          
-          expect(subject.count).to eq(1)
-        end
+        it { expect(subject.count).to eq(1) }
       end
     end
 
