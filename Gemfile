@@ -25,7 +25,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 gem 'blueprinter'
 
-gem 'state_machines'
+gem 'state_machines-activerecord'
 
 gem 'hashie'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
