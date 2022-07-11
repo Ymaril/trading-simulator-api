@@ -1,0 +1,158 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.apilayer.com/fixer/latest?base=USD&symbols=USD
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Apikey:
+      - HgjZBdTZqKQ4haORO1KBucxjZ5ztOEUR
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Jul 2022 19:16:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 7293e027da499d69-DME
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Apo-Via:
+      - origin,host
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Ratelimit-Limit:
+      - '100'
+      Ratelimit-Remaining:
+      - '97'
+      Ratelimit-Reset:
+      - '1658592'
+      X-Cloud-Trace-Context:
+      - 65842297fda429b4a843f6f5e765b197
+      X-Ratelimit-Limit-Day:
+      - '100'
+      X-Ratelimit-Limit-Month:
+      - '100'
+      X-Ratelimit-Remaining-Day:
+      - '97'
+      X-Ratelimit-Remaining-Month:
+      - '97'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=HEd0KrWjBCnOpBkbSkaNcVra40COwKUGh3X2M%2BbXGbp40%2BXKWe3z773mZndk7RRET%2BsaJFK3tHzZ5Io8HBz6fpGv9o%2Fpfamvazmm7tgDup7WsIcgME78jDZ7ipbXH65SXAQ%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+            "success": true,
+            "timestamp": 1657552157,
+            "base": "USD",
+            "date": "2022-07-11",
+            "rates": {
+                "USD": 1
+            }
+        }
+  recorded_at: Mon, 11 Jul 2022 19:16:48 GMT
+- request:
+    method: get
+    uri: https://api.apilayer.com/fixer/latest?base=USD&symbols=USD,BTC
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Apikey:
+      - HgjZBdTZqKQ4haORO1KBucxjZ5ztOEUR
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Mon, 11 Jul 2022 19:16:48 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Cf-Ray:
+      - 7293e02a5e3c7b4f-DME
+      Access-Control-Allow-Origin:
+      - "*"
+      Cf-Cache-Status:
+      - DYNAMIC
+      Cf-Apo-Via:
+      - origin,host
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Ratelimit-Limit:
+      - '100'
+      Ratelimit-Remaining:
+      - '96'
+      Ratelimit-Reset:
+      - '1658592'
+      X-Cloud-Trace-Context:
+      - f63504cff0958a84712d1eda8fc83a4c
+      X-Ratelimit-Limit-Day:
+      - '100'
+      X-Ratelimit-Limit-Month:
+      - '100'
+      X-Ratelimit-Remaining-Day:
+      - '96'
+      X-Ratelimit-Remaining-Month:
+      - '96'
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=%2B50fTnWKZ%2BL3L9TiAaP9PQokz6RwhEO0cQ2ZNIQcyKVCgjnXnlgS7SJSmJoW0SLNdk9ti8R8ZooTEOR9RiSEBAP8RMD%2B3Q%2BmwMyG0GoD4stjH%2F1br6qCohMM%2F6wSjlN%2F%2B9o%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Vary:
+      - Accept-Encoding
+      Server:
+      - cloudflare
+      Alt-Svc:
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: |
+        {
+            "success": true,
+            "timestamp": 1657552157,
+            "base": "USD",
+            "date": "2022-07-11",
+            "rates": {
+                "USD": 1,
+                "BTC": 4.9090574e-05
+            }
+        }
+  recorded_at: Mon, 11 Jul 2022 19:16:48 GMT
+recorded_with: VCR 6.1.0

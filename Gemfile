@@ -31,6 +31,10 @@ gem 'hashie'
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+gem 'whenever', require: false
+
+gem 'httparty'
+
 gem 'rswag-api'
 gem 'rswag-ui'
 
@@ -41,6 +45,8 @@ group :development, :test do
   gem 'rswag-specs'
   gem 'factory_bot_rails'
   gem 'faker'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do
