@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/currencies', type: :request do
@@ -19,8 +21,8 @@ RSpec.describe 'api/v1/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json["results"].count).to eq(2)
-          expect(response_json).to include("meta" => {"total_count" => 2})
+          expect(response_json['results'].count).to eq(2)
+          expect(response_json).to include('meta' => { 'total_count' => 2 })
         end
       end
     end
@@ -42,7 +44,7 @@ RSpec.describe 'api/v1/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
+          expect(response_json).to include('code' => 'USD', 'name' => 'Dollar')
         end
       end
 
@@ -51,10 +53,9 @@ RSpec.describe 'api/v1/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
     end
   end
 end
-

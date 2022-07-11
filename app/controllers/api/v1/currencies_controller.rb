@@ -1,27 +1,33 @@
-class Api::V1::CurrenciesController < Api::V1::V1Controller
-  before_action :set_currency, only: %w[show]
-  before_action :set_scope, only: %w[index]
+# frozen_string_literal: true
 
-  def index
-    result = CurrenciesFetcher.new @scope
+module Api
+  module V1
+    class CurrenciesController < Api::V1::V1Controller
+      before_action :set_currency, only: %w[show]
+      before_action :set_scope, only: %w[index]
 
-    render json: {
-      results: CurrencySerializer.render_as_hash(result.build(params)),
-      meta: result.meta
-    }
-  end
+      def index
+        result = CurrenciesFetcher.new @scope
 
-  def show
-    render json: CurrencySerializer.render_as_hash(@currency)
-  end
+        render json: {
+          results: CurrencySerializer.render_as_hash(result.build(params)),
+          meta: result.meta
+        }
+      end
 
-  private
+      def show
+        render json: CurrencySerializer.render_as_hash(@currency)
+      end
 
-  def set_currency
-    @currency = Currency.find(params[:id])
-  end
+      private
 
-  def set_scope
-    @scope = Currency.all
+      def set_currency
+        @currency = Currency.find(params[:id])
+      end
+
+      def set_scope
+        @scope = Currency.all
+      end
+    end
   end
 end

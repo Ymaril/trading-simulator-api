@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CrudServices
   class Base
     include ServiceResultMethods
@@ -17,6 +19,7 @@ module CrudServices
         end
       end
       return result unless result.success?
+
       success_result data: { object_name => object }
     end
 

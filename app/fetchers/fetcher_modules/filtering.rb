@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 module FetcherModules
   module Filtering
     def filter_types
       [
         {
           name: 'greater_than',
-          value: -> (params) { params.respond_to?(:each_pair) && params[:gte] }
+          value: ->(params) { params.respond_to?(:each_pair) && params[:gte] }
         },
         {
           name: 'lesser_than',
-          value: -> (params) { params.respond_to?(:each_pair) && params[:lte] }
+          value: ->(params) { params.respond_to?(:each_pair) && params[:lte] }
         },
         {
           name: 'equal',
-          value: -> (params) { !params.respond_to?(:each_pair) && params }
+          value: ->(params) { !params.respond_to?(:each_pair) && params }
         }
       ]
     end
@@ -27,14 +29,14 @@ module FetcherModules
           values = filter[:value].call params[attribute_name]
           values = values.split(',') if values.is_a? String
 
-          if values
-            method_name = "#{attribute_name}_#{filter[:name]}"
+          next unless values
 
-            if respond_to?(method_name)
-              result = send(method_name, values, result)
-            elsif model_attributes.include?(attribute_name)
-              result = send("filter_#{filter[:name]}_by", attribute_name, values, result)
-            end
+          method_name = "#{attribute_name}_#{filter[:name]}"
+
+          if respond_to?(method_name)
+            result = send(method_name, values, result)
+          elsif model_attributes.include?(attribute_name)
+            result = send("filter_#{filter[:name]}_by", attribute_name, values, result)
           end
         end
       end

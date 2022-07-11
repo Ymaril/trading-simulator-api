@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Currencies::DestroyService, type: :service do
@@ -5,7 +7,7 @@ RSpec.describe Currencies::DestroyService, type: :service do
 
   let!(:currency) { create(:currency) }
 
-  it do 
+  it do
     expect(subject.success?).to be_truthy
     expect(Currency.where(code: 'USD', name: 'Dollar')).to_not exist
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CrudServices
   class Save < Base
     def perform_chain

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/admin/currencies', type: :request do
@@ -19,8 +21,8 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json["results"].count).to eq(2)
-          expect(response_json).to include("meta" => {"total_count" => 2})
+          expect(response_json['results'].count).to eq(2)
+          expect(response_json).to include('meta' => { 'total_count' => 2 })
         end
       end
 
@@ -42,17 +44,17 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
           code: { type: :string },
           name: { type: :string }
         },
-        required: [ 'code', 'name' ]
+        required: %w[code name]
       }
 
-      let(:params) { {code: 'USD', name: 'Dollar'} }
+      let(:params) { { code: 'USD', name: 'Dollar' } }
 
       consumes 'application/json'
 
       response(201, 'successful') do
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
+          expect(response_json).to include('code' => 'USD', 'name' => 'Dollar')
           expect(Currency.where(code: 'USD', name: 'Dollar')).to exist
         end
       end
@@ -62,7 +64,7 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => "Currency: Code has already been taken")
+          expect(response_json).to include('error' => 'Currency: Code has already been taken')
         end
       end
 
@@ -90,7 +92,7 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
+          expect(response_json).to include('code' => 'USD', 'name' => 'Dollar')
         end
       end
 
@@ -99,7 +101,7 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
 
@@ -124,7 +126,7 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("code" => 'USD', "name" => 'Dollar')
+          expect(response_json).to include('code' => 'USD', 'name' => 'Dollar')
           expect(Currency.where(code: 'USD', name: 'Dollar')).to_not exist
         end
       end
@@ -134,7 +136,7 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
 
@@ -147,4 +149,3 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
     end
   end
 end
-

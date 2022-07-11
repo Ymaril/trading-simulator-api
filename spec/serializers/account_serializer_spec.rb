@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AccountSerializer, type: :serializer do
@@ -9,7 +11,7 @@ RSpec.describe AccountSerializer, type: :serializer do
   it do
     is_expected.to match(
       balance: 5,
-      currency: {code: 'USD', name: 'Dollar', id: currency.id},
+      currency: { code: 'USD', name: 'Dollar', id: currency.id },
       id: account.id
     )
   end

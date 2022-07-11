@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Order, type: :model do
-  subject do 
+  subject do
     described_class.new(
       from_currency: from_currency,
       to_currency: to_currency,
@@ -63,28 +65,28 @@ RSpec.describe Order, type: :model do
 
   describe 'state machine' do
     subject(:order) { create(:order, state: :created) }
-    
+
     describe 'complete' do
       before { order.complete }
-    
-      it { is_expected.to be_completed  }
+
+      it { is_expected.to be_completed }
 
       describe 'not allow to cancel' do
         before { order.cancel }
-      
-        it { is_expected.to be_completed  }
+
+        it { is_expected.to be_completed }
       end
     end
-    
+
     describe 'cancel' do
       before { order.cancel }
-    
+
       it { is_expected.to be_canceled  }
 
       describe 'not allow to complete' do
         before { order.complete }
-      
-        it { is_expected.to be_canceled  }
+
+        it { is_expected.to be_canceled }
       end
     end
   end

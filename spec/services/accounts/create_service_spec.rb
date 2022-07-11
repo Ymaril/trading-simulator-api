@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Accounts::CreateService, type: :service do
@@ -23,7 +25,7 @@ RSpec.describe Accounts::CreateService, type: :service do
   end
 
   describe 'not uniq account' do
-    before { create(:account, user: current_user, currency: currency)}
+    before { create(:account, user: current_user, currency: currency) }
 
     it do
       expect(subject.success?).to be_falsy

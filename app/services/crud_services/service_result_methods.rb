@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module CrudServices
   module ServiceResultMethods
-    def build_result(success: , status: , message: nil, data: {})
+    def build_result(success:, status:, message: nil, data: {})
       ::Hashie::Mash.new(
         success?: success,
         failure?: !success,

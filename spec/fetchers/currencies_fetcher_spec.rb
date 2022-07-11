@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe CurrenciesFetcher, type: :fetcher do
@@ -9,7 +11,7 @@ RSpec.describe CurrenciesFetcher, type: :fetcher do
   describe 'filters' do
     describe 'name' do
       describe 'equal' do
-        let(:params) { {'name' => 'Dollar'} }
+        let(:params) { { 'name' => 'Dollar' } }
 
         before do
           create(:currency, name: 'Dollar')
@@ -23,7 +25,7 @@ RSpec.describe CurrenciesFetcher, type: :fetcher do
 
     describe 'code' do
       describe 'equal' do
-        let(:params) { {'code' => 'USD'} }
+        let(:params) { { 'code' => 'USD' } }
 
         before do
           create(:currency, code: 'USD')
@@ -37,7 +39,7 @@ RSpec.describe CurrenciesFetcher, type: :fetcher do
   end
 
   describe 'sorting' do
-    let(:params) { {'sort_by' => sort_by, 'order_by' => order_by} }
+    let(:params) { { 'sort_by' => sort_by, 'order_by' => order_by } }
 
     describe 'name' do
       let(:sort_by) { 'name' }
@@ -78,7 +80,7 @@ RSpec.describe CurrenciesFetcher, type: :fetcher do
         let(:order_by) { 'ASC' }
 
         it do
-          expect(subject.pluck(:code)).to eql(['AUS', 'BTC', 'CSA'])
+          expect(subject.pluck(:code)).to eql(%w[AUS BTC CSA])
         end
       end
 
@@ -86,14 +88,14 @@ RSpec.describe CurrenciesFetcher, type: :fetcher do
         let(:order_by) { 'DESC' }
 
         it do
-          expect(subject.pluck(:code)).to eql(['CSA', 'BTC', 'AUS'])
+          expect(subject.pluck(:code)).to eql(%w[CSA BTC AUS])
         end
       end
     end
   end
 
   describe 'pagination' do
-    let(:params) { {per_page: 5, page: page} }
+    let(:params) { { per_page: 5, page: page } }
 
     before do
       create_list(:currency, 7)

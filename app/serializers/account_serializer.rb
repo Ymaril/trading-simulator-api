@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AccountSerializer < Blueprinter::Base
   identifier :id
 

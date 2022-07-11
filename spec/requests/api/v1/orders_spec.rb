@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/orders', type: :request do
@@ -21,8 +23,8 @@ RSpec.describe 'api/v1/orders', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json["results"].count).to eq(2)
-          expect(response_json).to include("meta" => {"total_count" => 2})
+          expect(response_json['results'].count).to eq(2)
+          expect(response_json).to include('meta' => { 'total_count' => 2 })
         end
       end
     end
@@ -39,9 +41,9 @@ RSpec.describe 'api/v1/orders', type: :request do
           to_currency_id: { type: :number },
           value: { type: :number },
           expires_at: { type: :string, format: 'date-time' },
-          complete_type: { type: :string, enum: ['take_profit', 'stop_loss'] }
+          complete_type: { type: :string, enum: %w[take_profit stop_loss] }
         },
-        required: ['from_currency_id', 'to_currency_id', 'value']
+        required: %w[from_currency_id to_currency_id value]
       }
 
       let(:from_currency) { create(:currency, code: 'USD', name: 'Dollar') }
@@ -50,7 +52,7 @@ RSpec.describe 'api/v1/orders', type: :request do
       let(:expires_at) { now + 15.minutes }
       let(:complete_type) { 'take_profit' }
 
-      let(:params) do 
+      let(:params) do
         {
           from_currency_id: from_currency.id,
           to_currency_id: to_currency.id,
@@ -71,13 +73,13 @@ RSpec.describe 'api/v1/orders', type: :request do
           response_json = JSON.parse(response.body)
 
           expect(response_json).to include(
-            "value" => 10,
-            "complete_type" => 'take_profit',
-            "completed_at" => nil,
-            "state" => "created",
-            "from_currency" => {"code" => 'USD', "name" => 'Dollar', "id" => from_currency.id},
-            "to_currency" => {"code" => 'BTC', "name" => 'Bitcoin', "id" => to_currency.id},
-            "expires_at" => (now + 15.minutes).utc.as_json
+            'value' => 10,
+            'complete_type' => 'take_profit',
+            'completed_at' => nil,
+            'state' => 'created',
+            'from_currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => from_currency.id },
+            'to_currency' => { 'code' => 'BTC', 'name' => 'Bitcoin', 'id' => to_currency.id },
+            'expires_at' => (now + 15.minutes).utc.as_json
           )
           expect(Order.where(from_currency_id: from_currency.id, to_currency_id: to_currency.id, value: value)).to exist
         end
@@ -86,7 +88,7 @@ RSpec.describe 'api/v1/orders', type: :request do
       response(422, 'invalid request') do
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => "User not have currency account")
+          expect(response_json).to include('error' => 'User not have currency account')
         end
       end
     end
@@ -130,13 +132,13 @@ RSpec.describe 'api/v1/orders', type: :request do
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to include(
-            "value" => 10,
-            "complete_type" => 'take_profit',
-            "completed_at" => (now - 15.minutes).utc.as_json,
-            "state" => "created",
-            "from_currency" => {"code" => 'USD', "name" => 'Dollar', "id" => from_currency.id},
-            "to_currency" => {"code" => 'BTC', "name" => 'Bitcoin', "id" => to_currency.id},
-            "expires_at" => (now + 15.minutes).utc.as_json
+            'value' => 10,
+            'complete_type' => 'take_profit',
+            'completed_at' => (now - 15.minutes).utc.as_json,
+            'state' => 'created',
+            'from_currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => from_currency.id },
+            'to_currency' => { 'code' => 'BTC', 'name' => 'Bitcoin', 'id' => to_currency.id },
+            'expires_at' => (now + 15.minutes).utc.as_json
           )
         end
       end
@@ -146,7 +148,7 @@ RSpec.describe 'api/v1/orders', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
     end
@@ -162,13 +164,13 @@ RSpec.describe 'api/v1/orders', type: :request do
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to include(
-            "value" => 10,
-            "complete_type" => 'take_profit',
-            "completed_at" => (now - 15.minutes).utc.as_json,
-            "state" => "canceled",
-            "from_currency" => {"code" => 'USD', "name" => 'Dollar', "id" => from_currency.id},
-            "to_currency" => {"code" => 'BTC', "name" => 'Bitcoin', "id" => to_currency.id},
-            "expires_at" => (now + 15.minutes).utc.as_json
+            'value' => 10,
+            'complete_type' => 'take_profit',
+            'completed_at' => (now - 15.minutes).utc.as_json,
+            'state' => 'canceled',
+            'from_currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => from_currency.id },
+            'to_currency' => { 'code' => 'BTC', 'name' => 'Bitcoin', 'id' => to_currency.id },
+            'expires_at' => (now + 15.minutes).utc.as_json
           )
           expect(order.reload).to be_canceled
         end
@@ -179,10 +181,9 @@ RSpec.describe 'api/v1/orders', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
     end
   end
 end
-

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 # We use the api_guard gem. He has own specs. Here we describe the swagger specification
@@ -13,19 +15,19 @@ RSpec.describe 'api_guard/passwords', type: :request do
       parameter name: :credentials, in: :body, schema: {
         type: :object,
         properties: {
-          password: {type: :string}
+          password: { type: :string }
         },
         required: ['password']
       }
 
       consumes 'application/json'
 
-      include_context "auth"
+      include_context 'auth'
 
-      let(:credentials) { {password: 'new_password'} }
+      let(:credentials) { { password: 'new_password' } }
 
       response(200, 'successful') do
-        run_test! do |response|
+        run_test! do |_response|
           expect(current_user.reload.authenticate('new_password')).to be_truthy
         end
       end

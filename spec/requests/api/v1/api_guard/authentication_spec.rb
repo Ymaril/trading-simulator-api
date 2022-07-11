@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 # We use the api_guard gem. He has own specs. Here we describe the swagger specification
 RSpec.describe 'api_guard/authentication', type: :request do
-
   path '/api/v1/users/sign_in' do
-
     let!(:user) do
       create(:user, password: user_password, email: user_email)
     end
@@ -21,19 +21,19 @@ RSpec.describe 'api_guard/authentication', type: :request do
           email: { type: :string },
           password: { type: :string }
         },
-        required: [ 'email', 'password' ]
+        required: %w[email password]
       }
 
       response(200, 'successful') do
-        let(:credentials) { {email: user_email, password: user_password} }
+        let(:credentials) { { email: user_email, password: user_password } }
 
-        header 'access-token', schema: {type: :string}, description: 'Json Web Token'
+        header 'access-token', schema: { type: :string }, description: 'Json Web Token'
 
         run_test!
       end
 
       response(422, 'invalid request') do
-        let(:credentials) { {email: 'another@email.com', password: user_password} }
+        let(:credentials) { { email: 'another@email.com', password: user_password } }
 
         run_test!
       end

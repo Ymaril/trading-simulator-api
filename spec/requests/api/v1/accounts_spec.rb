@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'swagger_helper'
 
 RSpec.describe 'api/v1/accounts', type: :request do
@@ -19,8 +21,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json["results"].count).to eq(2)
-          expect(response_json).to include("meta" => {"total_count" => 2})
+          expect(response_json['results'].count).to eq(2)
+          expect(response_json).to include('meta' => { 'total_count' => 2 })
         end
       end
     end
@@ -40,7 +42,7 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
       let(:currency) { create(:currency, code: 'USD', name: 'Dollar') }
 
-      let(:params) { {currency_id: currency.id} }
+      let(:params) { { currency_id: currency.id } }
 
       consumes 'application/json'
 
@@ -48,8 +50,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to include(
-            "balance" => 0, 
-            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id}
+            'balance' => 0,
+            'currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => currency.id }
           )
           expect(Currency.where(code: 'USD', name: 'Dollar')).to exist
         end
@@ -60,7 +62,7 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => "Account: Currency has already been taken")
+          expect(response_json).to include('error' => 'Account: Currency has already been taken')
         end
       end
     end
@@ -84,9 +86,9 @@ RSpec.describe 'api/v1/accounts', type: :request do
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to match(
-            "balance" => 5,
-            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id},
-            "id" => account.id
+            'balance' => 5,
+            'currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => currency.id },
+            'id' => account.id
           )
         end
       end
@@ -97,12 +99,10 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
     end
-
-
 
     delete('destroy') do
       security [api_key: []]
@@ -119,9 +119,9 @@ RSpec.describe 'api/v1/accounts', type: :request do
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to match(
-            "balance" => 5,
-            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id},
-            "id" => account.id
+            'balance' => 5,
+            'currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => currency.id },
+            'id' => account.id
           )
           expect(Account.where(user: current_user, currency: currency)).to_not exist
         end
@@ -133,7 +133,7 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
     end
@@ -149,7 +149,7 @@ RSpec.describe 'api/v1/accounts', type: :request do
       required: ['value']
     }
 
-    let(:params) { {value: value}}
+    let(:params) { { value: value } }
 
     patch('charge') do
       security [api_key: []]
@@ -167,9 +167,9 @@ RSpec.describe 'api/v1/accounts', type: :request do
         run_test! do |response|
           response_json = JSON.parse(response.body)
           expect(response_json).to match(
-            "balance" => 105,
-            "currency" => {"code" => 'USD', "name" => 'Dollar', "id" => currency.id},
-            "id" => account.id
+            'balance' => 105,
+            'currency' => { 'code' => 'USD', 'name' => 'Dollar', 'id' => currency.id },
+            'id' => account.id
           )
           expect(Account.where(user: current_user, currency: currency, balance: 105)).to exist
         end
@@ -178,7 +178,7 @@ RSpec.describe 'api/v1/accounts', type: :request do
       response(422, 'Invalid request') do
         let(:value) { -3 }
 
-        run_test! do |response|
+        run_test! do |_response|
           expect(account.reload.balance).to eql(100)
         end
       end
@@ -188,10 +188,9 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
         run_test! do |response|
           response_json = JSON.parse(response.body)
-          expect(response_json).to include("error" => 'not_found')
+          expect(response_json).to include('error' => 'not_found')
         end
       end
     end
   end
 end
-

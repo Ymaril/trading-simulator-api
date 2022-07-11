@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Accounts
   class ChargeService < ::CrudServices::Save
     def initialize(object, params, current_user = nil)
@@ -28,7 +30,7 @@ module Accounts
         invalid_params_result object
       end
     end
-    
+
     def new_balance
       object.balance + params[:value].to_i
     end

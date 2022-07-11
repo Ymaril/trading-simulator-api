@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AccountsFetcher, type: :fetcher do
@@ -15,17 +17,17 @@ RSpec.describe AccountsFetcher, type: :fetcher do
       end
 
       describe 'equal' do
-        let(:params) { {'balance' => 4} }
+        let(:params) { { 'balance' => 4 } }
 
         it { expect(subject.count).to eq(1) }
       end
       describe 'greater' do
-        let(:params) { {'balance' => {'gte' => 3}} }
+        let(:params) { { 'balance' => { 'gte' => 3 } } }
 
         it { expect(subject.count).to eq(2) }
       end
       describe 'lower' do
-        let(:params) { {'balance' => {'lte' => 3}} }
+        let(:params) { { 'balance' => { 'lte' => 3 } } }
 
         it { expect(subject.count).to eq(1) }
       end
@@ -41,7 +43,7 @@ RSpec.describe AccountsFetcher, type: :fetcher do
       end
 
       describe 'equal' do
-        let(:params) { {'user_id' => user.id} }
+        let(:params) { { 'user_id' => user.id } }
 
         it { expect(subject.count).to eq(1) }
       end
@@ -57,7 +59,7 @@ RSpec.describe AccountsFetcher, type: :fetcher do
       end
 
       describe 'equal' do
-        let(:params) { {'currency_id' => currency.id} }
+        let(:params) { { 'currency_id' => currency.id } }
 
         it { expect(subject.count).to eq(1) }
       end
@@ -65,7 +67,7 @@ RSpec.describe AccountsFetcher, type: :fetcher do
   end
 
   describe 'sorting' do
-    let(:params) { {'sort_by' => sort_by, 'order_by' => order_by} }
+    let(:params) { { 'sort_by' => sort_by, 'order_by' => order_by } }
 
     describe 'balance' do
       let(:sort_by) { 'balance' }
@@ -95,7 +97,7 @@ RSpec.describe AccountsFetcher, type: :fetcher do
   end
 
   describe 'pagination' do
-    let(:params) { {per_page: 5, page: page} }
+    let(:params) { { per_page: 5, page: page } }
 
     before do
       create_list(:account, 7)

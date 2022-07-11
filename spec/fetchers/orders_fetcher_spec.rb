@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe OrdersFetcher, type: :fetcher do
@@ -10,10 +12,10 @@ RSpec.describe OrdersFetcher, type: :fetcher do
     describe 'from_currency' do
       describe 'equal' do
         let!(:from_currency) { create(:currency) }
-        let(:params) { {'from_currency_id' => from_currency.id} }
+        let(:params) { { 'from_currency_id' => from_currency.id } }
 
         before do
-          create(:order, from_currency: from_currency) 
+          create(:order, from_currency: from_currency)
           create_list(:order, 2)
         end
 
@@ -24,11 +26,11 @@ RSpec.describe OrdersFetcher, type: :fetcher do
     describe 'to_currency' do
       describe 'equal' do
         let!(:to_currency) { create(:currency) }
-        let(:params) { {'to_currency_id' => to_currency.id} }
+        let(:params) { { 'to_currency_id' => to_currency.id } }
 
-        before do 
+        before do
           create(:order, to_currency: to_currency)
-          create_list(:order, 2) 
+          create_list(:order, 2)
         end
 
         it { expect(subject.count).to eq(1) }
@@ -38,11 +40,11 @@ RSpec.describe OrdersFetcher, type: :fetcher do
     describe 'user' do
       describe 'equal' do
         let!(:user) { create(:user) }
-        let(:params) { {'user_id' => user.id} }
+        let(:params) { { 'user_id' => user.id } }
 
-        before do 
+        before do
           create(:order, user: user)
-          create_list(:order, 2) 
+          create_list(:order, 2)
         end
 
         it { expect(subject.count).to eq(1) }
@@ -57,17 +59,17 @@ RSpec.describe OrdersFetcher, type: :fetcher do
       end
 
       describe 'equal' do
-        let(:params) { {'value' => 4} }
+        let(:params) { { 'value' => 4 } }
 
         it { expect(subject.count).to eq(1) }
       end
       describe 'greater' do
-        let(:params) { {'value' => {'gte' => 3}} }
+        let(:params) { { 'value' => { 'gte' => 3 } } }
 
         it { expect(subject.count).to eq(2) }
       end
       describe 'lower' do
-        let(:params) { {'value' => {'lte' => 3}} }
+        let(:params) { { 'value' => { 'lte' => 3 } } }
 
         it { expect(subject.count).to eq(1) }
       end
@@ -83,17 +85,17 @@ RSpec.describe OrdersFetcher, type: :fetcher do
       end
 
       describe 'equal' do
-        let(:params) { {'expires_at' => now + 10.minutes} }
+        let(:params) { { 'expires_at' => now + 10.minutes } }
 
         it { expect(subject.count).to eq(1) }
       end
       describe 'greater' do
-        let(:params) { {'expires_at' => {'gte' => now + 7.minutes}} }
+        let(:params) { { 'expires_at' => { 'gte' => now + 7.minutes } } }
 
         it { expect(subject.count).to eq(2) }
       end
       describe 'lower' do
-        let(:params) { {'expires_at' => {'lte' => now + 7.minutes}} }
+        let(:params) { { 'expires_at' => { 'lte' => now + 7.minutes } } }
 
         it { expect(subject.count).to eq(1) }
       end
@@ -109,17 +111,17 @@ RSpec.describe OrdersFetcher, type: :fetcher do
       end
 
       describe 'equal' do
-        let(:params) { {'completed_at' => now + 10.minutes} }
+        let(:params) { { 'completed_at' => now + 10.minutes } }
 
         it { expect(subject.count).to eq(1) }
       end
       describe 'greater' do
-        let(:params) { {'completed_at' => {'gte' => now + 7.minutes}} }
+        let(:params) { { 'completed_at' => { 'gte' => now + 7.minutes } } }
 
         it { expect(subject.count).to eq(2) }
       end
       describe 'lower' do
-        let(:params) { {'completed_at' => {'lte' => now + 7.minutes}} }
+        let(:params) { { 'completed_at' => { 'lte' => now + 7.minutes } } }
 
         it { expect(subject.count).to eq(1) }
       end
@@ -127,7 +129,7 @@ RSpec.describe OrdersFetcher, type: :fetcher do
 
     describe 'state' do
       describe 'equal' do
-        let(:params) { {'state' => 'canceled'} }
+        let(:params) { { 'state' => 'canceled' } }
 
         before do
           create(:order, state: :created)
@@ -141,9 +143,9 @@ RSpec.describe OrdersFetcher, type: :fetcher do
 
     describe 'complete_type' do
       describe 'equal' do
-        let(:params) { {'complete_type' => 'take_profit'} }
+        let(:params) { { 'complete_type' => 'take_profit' } }
 
-        before do 
+        before do
           create(:order, complete_type: 'stop_loss')
           create(:order, complete_type: 'take_profit')
           create(:order, complete_type: 'stop_loss')
@@ -155,7 +157,7 @@ RSpec.describe OrdersFetcher, type: :fetcher do
   end
 
   describe 'sorting' do
-    let(:params) { {'sort_by' => sort_by, 'order_by' => order_by} }
+    let(:params) { { 'sort_by' => sort_by, 'order_by' => order_by } }
 
     describe 'value' do
       let(:sort_by) { 'value' }
@@ -241,7 +243,7 @@ RSpec.describe OrdersFetcher, type: :fetcher do
   end
 
   describe 'pagination' do
-    let(:params) { {per_page: 5, page: page} }
+    let(:params) { { per_page: 5, page: page } }
 
     before do
       create_list(:order, 7)

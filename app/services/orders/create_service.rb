@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Orders
   class CreateService < ::CrudServices::CreateService
     def perform_chain
@@ -9,7 +11,7 @@ module Orders
     def assign_user
       if current_user.accounts.where(currency_id: params[:from_currency_id]).exists?
         object.user = current_user
-        
+
         success_result
       else
         error_result message: 'User not have currency account'

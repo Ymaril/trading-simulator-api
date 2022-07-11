@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe ExternalApi::ExchangeRatesService, type: :service do
   before do
-    VCR.insert_cassette 'exchange_rates', :record => :new_episodes
+    VCR.insert_cassette 'exchange_rates', record: :new_episodes
   end
- 
+
   after do
     VCR.eject_cassette
   end
@@ -17,9 +19,9 @@ RSpec.describe ExternalApi::ExchangeRatesService, type: :service do
     it { is_expected.to include('USD' => 1) }
 
     describe 'some' do
-      let(:currency_codes) { ['USD', 'BTC'] }
+      let(:currency_codes) { %w[USD BTC] }
 
-      it do 
+      it do
         expect(subject.keys).to include('USD', 'BTC')
         is_expected.to include('USD' => 1)
       end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Orders
   class CancelService < ::CrudServices::Save
     def initialize(object, current_user = nil)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class OrderSerializer < Blueprinter::Base
   identifier :id
 

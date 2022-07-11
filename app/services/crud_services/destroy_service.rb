@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CrudServices
   class DestroyService < Base
     def initialize(object, params = {}, current_user = nil, options = {})

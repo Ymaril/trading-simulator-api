@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module FetcherModules
   module Pagination
     attr_reader :total
 
     def meta
-      return {total_count: total} if params[:page].nil? || params[:per_page].nil?
+      return { total_count: total } if params[:page].nil? || params[:per_page].nil?
 
       limit_count = params[:per_page].to_i
       last_page = limit_count.positive? ? (total.to_f / limit_count).ceil : 1
@@ -34,7 +36,7 @@ module FetcherModules
     def limit(source)
       limit = params[:per_page] || params[:limit]
       result = source
-    
+
       result = result.limit(limit) if limit
 
       result

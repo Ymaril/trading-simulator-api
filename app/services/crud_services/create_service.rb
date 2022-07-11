@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module CrudServices
   class CreateService < Save
     def initialize(params, current_user = nil, options = {})

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Accounts
   class CreateService < ::CrudServices::CreateService
     def perform_chain

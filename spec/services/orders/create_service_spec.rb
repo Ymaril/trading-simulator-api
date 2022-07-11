@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Orders::CreateService, type: :service do
@@ -12,10 +14,10 @@ RSpec.describe Orders::CreateService, type: :service do
   let(:expires_at) { now + 2.months }
   let(:complete_type) { 'take_profit' }
 
-  let(:params) do 
+  let(:params) do
     ActionController::Parameters.new(
-      from_currency_id: from_currency.id, 
-      to_currency_id: to_currency.id, 
+      from_currency_id: from_currency.id,
+      to_currency_id: to_currency.id,
       value: value,
       expires_at: expires_at,
       complete_type: complete_type

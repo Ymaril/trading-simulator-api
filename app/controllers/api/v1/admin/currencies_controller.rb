@@ -1,53 +1,61 @@
-class Api::V1::Admin::CurrenciesController < Api::V1::Admin::AdminController
-  before_action :set_currency, only: %w[show destroy]
-  before_action :set_scope, only: %w[index]
+# frozen_string_literal: true
 
-  def index
-    result = CurrenciesFetcher.new @scope
+module Api
+  module V1
+    module Admin
+      class CurrenciesController < Api::V1::Admin::AdminController
+        before_action :set_currency, only: %w[show destroy]
+        before_action :set_scope, only: %w[index]
 
-    render json: {
-      results: CurrencySerializer.render_as_hash(result.build(params)),
-      meta: result.meta
-    }
-  end
+        def index
+          result = CurrenciesFetcher.new @scope
 
-  def show
-    render json: CurrencySerializer.render_as_hash(@currency)
-  end
+          render json: {
+            results: CurrencySerializer.render_as_hash(result.build(params)),
+            meta: result.meta
+          }
+        end
 
-  def create
-    result = Currencies::CreateService.perform params, current_user
+        def show
+          render json: CurrencySerializer.render_as_hash(@currency)
+        end
 
-    if result.success?
-      render(
-        status: 201,
-        json: CurrencySerializer.render_as_hash(result.data[:currency])
-      )
-    else
-      render_error 422, {status: result.status, message: result.message}
+        def create
+          result = Currencies::CreateService.perform params, current_user
+
+          if result.success?
+            render(
+              status: 201,
+              json: CurrencySerializer.render_as_hash(result.data[:currency])
+            )
+          else
+            render_error 422, { status: result.status, message: result.message }
+          end
+        end
+
+        def destroy
+          result = Currencies::DestroyService.perform @currency, params, current_user
+
+          if result.success?
+            render(
+              status: 200,
+              json: CurrencySerializer.render_as_hash(result.data[:currency])
+            )
+          else
+            render_error 422, { status: result.status, message: result.message }
+          end
+        end
+
+        private
+
+        def set_currency
+          @currency = Currency.find(params[:id])
+        end
+
+        def set_scope
+          @scope = Currency.all
+        end
+      end
     end
-  end
-
-  def destroy
-    result = Currencies::DestroyService.perform @currency, params, current_user
-
-    if result.success?
-      render(
-        status: 200,
-        json: CurrencySerializer.render_as_hash(result.data[:currency])
-      )
-    else
-      render_error 422, {status: result.status, message: result.message}
-    end
-  end
-
-  private
-
-  def set_currency
-    @currency = Currency.find(params[:id])
-  end
-
-  def set_scope
-    @scope = Currency.all
   end
 end

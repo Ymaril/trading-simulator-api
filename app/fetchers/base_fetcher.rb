@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseFetcher
   include FetcherModules::Pagination
   include FetcherModules::Filtering
