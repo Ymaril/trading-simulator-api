@@ -12,6 +12,8 @@ RSpec.describe 'api_guard/passwords', type: :request do
     patch('update password') do
       security [api_key: []]
 
+      tags 'Authentication'
+
       parameter name: :credentials, in: :body, schema: {
         type: :object,
         properties: {

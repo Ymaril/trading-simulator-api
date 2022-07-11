@@ -9,6 +9,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
     get('index') do
       security [api_key: []]
 
+      tags 'Accounts'
+
       include_context 'auth'
 
       consumes 'application/json'
@@ -29,6 +31,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
     post('create') do
       security [api_key: []]
+
+      tags 'Accounts'
 
       include_context 'auth'
 
@@ -74,6 +78,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
     get('show') do
       security [api_key: []]
 
+      tags 'Accounts'
+
       include_context 'auth'
 
       consumes 'application/json'
@@ -106,6 +112,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
     delete('destroy') do
       security [api_key: []]
+
+      tags 'Accounts'
 
       include_context 'auth'
 
@@ -153,6 +161,8 @@ RSpec.describe 'api/v1/accounts', type: :request do
 
     patch('charge') do
       security [api_key: []]
+
+      tags 'Accounts'
 
       include_context 'auth'
 

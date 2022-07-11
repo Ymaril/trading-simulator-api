@@ -12,6 +12,8 @@ RSpec.describe 'api_guard/authentication', type: :request do
     post('create authentication') do
       consumes 'application/json'
 
+      tags 'Authentication'
+
       let(:user_email) { 'qwe@qwe.qwe' }
       let(:user_password) { 'qweqweqwe' }
 
@@ -45,6 +47,8 @@ RSpec.describe 'api_guard/authentication', type: :request do
 
     delete('delete authentication') do
       security [api_key: []]
+
+      tags 'Authentication'
 
       consumes 'application/json'
 

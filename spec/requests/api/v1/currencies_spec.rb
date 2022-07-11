@@ -9,6 +9,8 @@ RSpec.describe 'api/v1/currencies', type: :request do
     get('index') do
       security [api_key: []]
 
+      tags 'Currencies'
+
       include_context 'auth'
 
       consumes 'application/json'
@@ -31,6 +33,8 @@ RSpec.describe 'api/v1/currencies', type: :request do
   path '/api/v1/currencies/{id}' do
     get('show') do
       security [api_key: []]
+
+      tags 'Currencies'
 
       include_context 'auth'
 

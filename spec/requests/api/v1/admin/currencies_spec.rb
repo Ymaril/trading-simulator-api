@@ -9,6 +9,8 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
     get('index') do
       security [api_key: []]
 
+      tags 'Admin'
+
       include_context 'auth'
 
       consumes 'application/json'
@@ -35,6 +37,8 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
     post('create') do
       security [api_key: []]
+
+      tags 'Admin'
 
       include_context 'auth'
 
@@ -82,6 +86,8 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
     get('show') do
       security [api_key: []]
 
+      tags 'Admin'
+
       include_context 'auth'
 
       consumes 'application/json'
@@ -115,6 +121,8 @@ RSpec.describe 'api/v1/admin/currencies', type: :request do
 
     delete('destroy') do
       security [api_key: []]
+
+      tags 'Admin'
 
       include_context 'auth'
 
