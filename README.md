@@ -1,24 +1,40 @@
-# README
+# Trading Simulator API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Simple Ruby on Rails Trading Simulator API
 
-Things you may want to cover:
+## Swagger
+Swagger specification is located at /api-docs/index.html
 
-* Ruby version
+## Admin credentials
+admin@example.com:12345
 
-* System dependencies
+## Running
 
-* Configuration
+### Using docker-compose
 
-* Database creation
+```bash
+cp secrets.env.template secrets.env
+```
+Update secrets.env file with api key for [https://fixer.io](https://fixer.io)
+```bash
+docker-compose up
+```
 
-* Database initialization
+## Develop
 
-* How to run the test suite
+### Dev running
+```bash
+cp .env.template .env
+```
+Update .env file
+```bash
+bundle install
+bundle exec rake db:setup
+bundle exec rails s
+```
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Run tests
+```bash
+bundle install
+bundle exec rspec
+```
