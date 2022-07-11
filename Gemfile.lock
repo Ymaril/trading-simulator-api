@@ -64,7 +64,6 @@ GEM
       public_suffix (>= 2.0.2, < 5.0)
     api_guard (0.5.2)
       jwt (~> 2.2)
-    ast (2.4.2)
     bcrypt (3.1.16)
     blueprinter (0.25.3)
     bootsnap (1.12.0)
@@ -77,6 +76,10 @@ GEM
       rexml
     crass (1.0.6)
     diff-lcs (1.5.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     factory_bot (6.2.1)
       activesupport (>= 5.0.0)
@@ -95,7 +98,6 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.10.0)
       concurrent-ruby (~> 1.0)
-    json (2.6.2)
     json-schema (2.8.1)
       addressable (>= 2.4)
     jwt (2.3.0)
@@ -119,9 +121,6 @@ GEM
     nio4r (2.5.8)
     nokogiri (1.13.6-x86_64-linux)
       racc (~> 1.4)
-    parallel (1.22.1)
-    parser (3.1.2.0)
-      ast (~> 2.4.1)
     pg (1.4.1)
     public_suffix (4.0.7)
     puma (5.6.4)
@@ -156,12 +155,10 @@ GEM
       method_source
       rake (>= 12.2)
       thor (~> 1.0)
-    rainbow (3.1.1)
     rake (13.0.6)
     rb-fsevent (0.11.1)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    regexp_parser (2.5.0)
     rexml (3.2.5)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
@@ -189,19 +186,6 @@ GEM
     rswag-ui (2.5.1)
       actionpack (>= 3.1, < 7.1)
       railties (>= 3.1, < 7.1)
-    rubocop (1.31.2)
-      json (~> 2.3)
-      parallel (~> 1.10)
-      parser (>= 3.1.0.0)
-      rainbow (>= 2.2.2, < 4.0)
-      regexp_parser (>= 1.8, < 3.0)
-      rexml (>= 3.2.5, < 4.0)
-      rubocop-ast (>= 1.18.0, < 2.0)
-      ruby-progressbar (~> 1.7)
-      unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.19.1)
-      parser (>= 3.1.1.0)
-    ruby-progressbar (1.11.0)
     spring (4.0.0)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
@@ -220,7 +204,6 @@ GEM
     thor (1.2.1)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    unicode-display_width (2.2.0)
     vcr (6.1.0)
     webmock (3.14.0)
       addressable (>= 2.8.0)
@@ -242,6 +225,7 @@ DEPENDENCIES
   blueprinter
   bootsnap (>= 1.4.4)
   byebug
+  dotenv-rails
   factory_bot_rails
   faker
   hashie
@@ -254,7 +238,6 @@ DEPENDENCIES
   rswag-api
   rswag-specs
   rswag-ui
-  rubocop
   spring
   state_machines-activerecord
   tzinfo-data

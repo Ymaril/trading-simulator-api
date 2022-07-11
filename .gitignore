@@ -29,3 +29,4 @@
 /postgres-data/
 
 secrets.env
+.env

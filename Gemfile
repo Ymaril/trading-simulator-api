@@ -49,6 +49,7 @@ group :development, :test do
   gem 'rswag-specs'
   gem 'vcr'
   gem 'webmock'
+  gem 'dotenv-rails'
 end
 
 group :development do
