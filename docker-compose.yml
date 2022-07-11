@@ -31,10 +31,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: bundle exec rake db:migrate
+    command: bundle exec rake db:setup
     depends_on:
       - db
-    restart: on-failure:5
     environment:
       POSTGRES_DB: trading_simulator
       POSTGRES_USER: admin
