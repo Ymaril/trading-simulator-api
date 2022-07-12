@@ -8,3 +8,7 @@ end
 every 1.day do
   rake 'orders:perform'
 end
+
+every 5.minutes do
+  rake 'orders:cancel'
+end

@@ -35,4 +35,9 @@ namespace :orders do
     
     to_complete_orders.each(&method(:complete_order))
   end
+
+  desc 'Cancel orders'
+  task cancel: :environment do
+    Order.created.where('expires_at < ?', DateTime.now).update_all(state: :canceled)
+  end
 end
