@@ -20,5 +20,9 @@ class Order < ApplicationRecord
     event :cancel do
       transition created: :canceled
     end
+
+    before_transition to: :completed do |order|
+      order.completed_at = Time.current
+    end
   end
 end
