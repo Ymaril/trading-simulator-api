@@ -10,5 +10,6 @@ FactoryBot.define do
       code
     end
     name { Faker::Currency.name }
+    latest_rate { rand(0..1000) }
   end
 end
