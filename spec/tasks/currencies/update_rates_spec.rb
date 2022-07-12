@@ -4,7 +4,9 @@ require 'rails_helper'
 
 Rails.application.load_tasks
 
-RSpec.describe 'currencies:update_rates', type: :serializer do
+RSpec.describe 'currencies:update_rates', type: :task do
+  after(:each) { Rake::Task['orders:perform'].reenable }
+
   let!(:currency1) { create(:currency, code: 'USD', latest_rate: nil) }
   let!(:currency2) { create(:currency, code: 'BTC', latest_rate: nil) }
   let!(:currency3) { create(:currency, code: 'AMD', latest_rate: nil) }
@@ -14,7 +16,7 @@ RSpec.describe 'currencies:update_rates', type: :serializer do
       { 'USD' => 1, 'BTC' => 0.422, 'AMD' => 0.00012 }
     )
 
-    Rake::Task["currencies:update_rates"].invoke
+    Rake::Task['currencies:update_rates'].invoke
   end
 
   it do

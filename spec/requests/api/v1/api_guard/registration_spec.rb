@@ -9,7 +9,7 @@ RSpec.describe 'api_guard/registration', type: :request do
       consumes 'application/json'
 
       tags 'Authentication'
-      
+
       parameter name: :credentials, in: :body, schema: {
         type: :object,
         properties: {
