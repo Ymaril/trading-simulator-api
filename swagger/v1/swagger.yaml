@@ -365,5 +365,3 @@ paths:
           description: successful
         '404':
           description: Not found
-servers:
-- url: https://3000.ymaril.dev
