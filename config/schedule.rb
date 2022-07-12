@@ -1,5 +1,10 @@
 # frozen_string_literal: true
 
-every 1.minute do
+# currency api update rates one time in day
+every 1.day do
   rake 'currencies:update_rates'
+end
+
+every 1.day do
+  rake 'orders:perform'
 end
