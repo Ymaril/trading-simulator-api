@@ -2,8 +2,11 @@
 
 Simple Ruby on Rails Trading Simulator API
 
+## Demo
+
+[https://trading-simulator-ymaril-api.herokuapp.com/api-docs](https://trading-simulator-ymaril-api.herokuapp.com/api-docs)
 ## Swagger
-Swagger specification is located at /api-docs/index.html
+Swagger specification is located at /api-docs/
 
 ## Admin credentials
 admin@example.com:12345
